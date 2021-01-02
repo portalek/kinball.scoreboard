@@ -16,10 +16,14 @@ function pricti(barva) {
 function odecti(barva) {
     var x = document.getElementById(barva).textContent;
     x = Number(x);
-    document.getElementById(barva).innerHTML = x - 1;
-}
+    if (x>0){
+      document.getElementById(barva).innerHTML = x - 1;
+      }
+    }
 
 document.onkeydown = checkKey;
+
+var last="NaN";
 
 function checkKey(e) {
 
@@ -30,7 +34,8 @@ function checkKey(e) {
     if (e.keyCode == '38') {
         // up arrow
        pricti("modra");
-       pricti("cerna");       
+       pricti("cerna");
+       last="chybaSeda";       
     }
     else if (e.keyCode == '40') {
         // down arrow
@@ -39,11 +44,31 @@ function checkKey(e) {
        // left arrow
        pricti("seda");
        pricti("cerna");
+       last="chybaModra";
     }
     else if (e.keyCode == '39') {
        // right arrow
        pricti("modra");
        pricti("seda");
+       last="chybaCerna";
+       
+    }
+    else if (e.keyCode == '27') {
+       // back
+       // pridat pamatovani posledniho pricteni a revertovat ho
+       if(last=="chybaSeda") {
+         odecti("modra");
+         odecti("cerna");      
+       }
+       else if(last=="chybaModra") {
+         odecti("seda");
+         odecti("cerna");      
+       }
+       else if(last=="chybaCerna") {
+         odecti("modra");
+         odecti("seda");      
+       }
+       last="NaN"
     }
     else if (e.keyCode == '179') {
        // play
